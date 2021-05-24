@@ -18,9 +18,8 @@ export const getAllArticlesByTopic = async (topics) => {
   return data.articles;
 };
 
-//
 
 //Monday jobs
 
 //need to get the articles to display that are relevent to the topic and then get them to sort by.
-//need to do the Header
+

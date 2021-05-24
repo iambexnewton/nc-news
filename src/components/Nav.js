@@ -12,9 +12,8 @@ const Nav = () => {
   }, []);
 
   return (
-    <nav className='Nav'>
+    <nav className='nav'>
       {topics.map((topic) => {
-        console.log(topic);
         return (
           <Link key={topic.slug} to={`/topics/${topic.slug}`}>
             {topic.slug}

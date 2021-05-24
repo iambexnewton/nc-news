@@ -9,10 +9,18 @@ export const getTopics = async () => {
   return data.topics;
 };
 
-export const getTopicArticles = async (articles) => {
-  console.log('******');
-
-  const { data } = await newsApi.get('/articles');
-
+export const getAllArticlesByTopic = async (topics) => {
+  const { data } = await newsApi.get('/articles', {
+    params: {
+      slug: topics
+    }
+  });
   return data.articles;
 };
+
+//
+
+//Monday jobs
+
+//need to get the articles to display that are relevent to the topic and then get them to sort by.
+//need to do the Header

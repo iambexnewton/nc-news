@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const newsApi = axios.create({
-  baseURL: 'https://bex-nc-news.herokuapp.com/api'
+  baseURL: 'https://bex-northcoders-news.herokuapp.com/api'
 });
 
 export const getTopics = async () => {
@@ -9,10 +9,12 @@ export const getTopics = async () => {
   return data.topics;
 };
 
-export const getAllArticlesByTopic = async (topics) => {
+
+
+export const getAllArticlesByTopic = async (query) => {
   const { data } = await newsApi.get('/articles', {
     params: {
-      slug: topics
+      topic: query,
     }
   });
   return data.articles;

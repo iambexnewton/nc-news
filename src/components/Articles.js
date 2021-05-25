@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
-// import { Link, useParams } from 'react-router';
-
+import {BrowserRouter as useParams} from 'react-router-dom'
 import { getAllArticlesByTopic } from '../utils/api';
 
 const Articles = () => {
   const [articles, setArticles] = useState([]);
 
+  const {topicsUrl} = useParams();
+
   useEffect(() => {
-    getAllArticlesByTopic().then((articlesFromApi) => {
+    getAllArticlesByTopic(topicsUrl).then((articlesFromApi) => {
       setArticles(articlesFromApi);
     });
-  }, []);
+  },[topicsUrl]);
 
   return (
     <div className=' Articles'>

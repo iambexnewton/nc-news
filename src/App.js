@@ -1,7 +1,6 @@
 import './App.css';
 import { Header } from './components/Header';
 import Nav from './components/Nav';
-
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Articles from './components/Articles';
 
@@ -11,11 +10,14 @@ function App() {
       <div className='nc news'>
         <Header />
         <Nav />
+
         <Switch>
           <Route exact path='/'>
             <Articles />
           </Route>
-          <Route exact path='/topic/:urlTopic'></Route>
+          <Route exact path='/articles/:topicsUrl'>
+          <Articles/>
+          </Route>
         </Switch>
       </div>
     </Router>

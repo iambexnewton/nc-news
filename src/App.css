@@ -43,6 +43,8 @@
 .nav a {
   text-decoration: none;
 }
+
+
 @media screen and (min-width: 550px) {
   .Nav {
     margin: 30px;

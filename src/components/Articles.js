@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import {BrowserRouter as useParams} from 'react-router-dom'
+import { useParams} from 'react-router-dom'
 import { getAllArticlesByTopic } from '../utils/api';
 
 const Articles = () => {

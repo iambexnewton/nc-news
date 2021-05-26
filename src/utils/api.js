@@ -9,19 +9,27 @@ export const getTopics = async () => {
   return data.topics;
 };
 
-
-
-export const getAllArticlesByTopic = async (query) => {
+export const getAllArticlesByTopic = async (query, sort_by, order) => {
   const { data } = await newsApi.get('/articles', {
     params: {
       topic: query,
+      sort_by: 'created_at',
+      order: 'desc'
     }
   });
+
   return data.articles;
 };
 
+export const getSingleArticle = async (id) => {
+  const { data } = await newsApi.get(`/articles/${id}`);
+  return data.article;
+};
 
-//Monday jobs
+export const getArticleComments = async (id) => {
+  const { data } = await newsApi.get(`/articles/${id}/comments`);
 
-//need to get the articles to display that are relevent to the topic and then get them to sort by.
+  console.log(data);
 
+  return data.comments;
+};

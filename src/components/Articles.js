@@ -1,34 +1,37 @@
 import { useEffect, useState } from 'react';
-import { useParams} from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom';
 import { getAllArticlesByTopic } from '../utils/api';
 
 const Articles = () => {
   const [articles, setArticles] = useState([]);
-
-  const {topicsUrl} = useParams();
+  const { topicsUrl } = useParams();
 
   useEffect(() => {
     getAllArticlesByTopic(topicsUrl).then((articlesFromApi) => {
       setArticles(articlesFromApi);
     });
-  },[topicsUrl]);
+  }, [topicsUrl]);
 
   return (
-    <div className=' Articles'>
+    <div>
       <h2>All Articles</h2>
-      <ul>
+      <ul className='article__wrapper'>
         {articles &&
-          articles.map(({ title, votes, comment_count, author, topic }) => {
-            return (
-              <li key={title}>
-                <h2>{title}</h2>
-                <p>user: {author}</p>
-                <p>
-                  votes: {votes} comment count: {comment_count}
-                </p>
-              </li>
-            );
-          })}
+          articles.map(
+            ({ title, votes, comment_count, author, article_id }) => {
+              return (
+                <Link to={`/article/${article_id}`}>
+                  <li className='article' key={title}>
+                    <h2>{title}</h2>
+                    <p>user: {author}</p>
+                    <p>
+                      votes: {votes} comment count: {comment_count}
+                    </p>
+                  </li>
+                </Link>
+              );
+            }
+          )}
       </ul>
     </div>
   );

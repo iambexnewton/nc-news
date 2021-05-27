@@ -16,32 +16,56 @@ const Articles = () => {
   }, [topicsUrl]);
 
   useEffect(() => {
-    newsApi.getAllArticlesByTopic({ sort_by }).then((articles) => {
+    newsApi.getAllArticlesByTopic(sort_by).then((articles) => {
       setArticles(articles);
       setisPending(false);
     });
   }, [sort_by]);
 
   return (
-    <div>
-      <h2>All Articles</h2>
-      <button On Click={() => setSortBy('Title')}>
-        Title
-      </button>
+    <div className='content'>
+      <div className='content__header'>
+        <h2 className='content__title'>
+          {topicsUrl ? topicsUrl : 'All Articles'}
+        </h2>
+        <div className='content__filter-wrapper'>
+          <span className='content__filter content__filter-sort'>Sort by:</span>
+          <button
+            className='content__filter content__filter-button'
+            On
+            Click={() => setSortBy('Title')}
+          >
+            Title
+          </button>
+          <button className='content__filter content__filter-button'>
+            Date
+          </button>
+        </div>
+      </div>
 
-      <button>Date</button>
       <ul className='article__wrapper'>
         {articles &&
           articles.map(
-            ({ title, votes, comment_count, author, article_id }) => {
+            ({ title, votes, comment_count, author, article_id, body }) => {
               return (
                 <Link to={`/article/${article_id}`}>
                   <li className='article' key={title}>
-                    <h2>{title}</h2>
-                    <p>user: {author}</p>
-                    <p>
-                      votes: {votes} comment count: {comment_count}
-                    </p>
+                    <h2 className='article__title'>{title}</h2>
+                    <p className='article__preview'>{`${body.substr(
+                      0,
+                      100
+                    )}...`}</p>
+                    <ul className='article__meta'>
+                      <li className='article__votes'>
+                        <span>Votes:</span> {votes}
+                      </li>
+                      <li className='article__comments'>
+                        <span>Comments:</span> {comment_count}
+                      </li>
+                      <li className='article__author'>
+                        <span>Author:</span> {author}
+                      </li>
+                    </ul>
                   </li>
                 </Link>
               );

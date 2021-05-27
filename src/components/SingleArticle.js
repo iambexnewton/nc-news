@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useVote } from '../hooks/useVote';
-import { getSingleArticle, getArticleComments } from '../utils/api';
+import { getSingleArticle, getArticleComments, patchVote } from '../utils/api';
 import Create from '../Forms/comment_form';
 
 const SingleArticle = () => {
@@ -23,44 +23,57 @@ const SingleArticle = () => {
   }, [id]);
 
   return (
-    <>
-      <div>
-        {isPending && <div>Loding...</div>}
-        <ul>
-          <li className='singleArticles'>
-            <h2>{singleArticle.title}</h2>
-            <p>{singleArticle.body}</p>
-            <p> user :{singleArticle.author}</p>
-            <p>
-              votes: {singleArticle.votes}
-              comment_count:
-              {singleArticle.comment_count}
-            </p>
+    <article className='single-article'>
+      {isPending && <div>Loding...</div>}
 
-            <button onClick={() => incrementVote()}>vote</button>
+      <h2 className='content__title'>{singleArticle.title}</h2>
 
-            <Expandable label={' comment '}>
-              <Create setComments={setComments} />
-            </Expandable>
+      <ul className='article__meta'>
+        <li className='article__votes'>
+          <span>Votes:</span> {singleArticle.votes}
+        </li>
+        <li className='article__comments'>
+          <span>Comments:</span> {singleArticle.comment_count}
+        </li>
+        <li className='article__author'>
+          <span>Author:</span> {singleArticle.author}
+        </li>
+      </ul>
 
-            <ul>
-              {comments.map(({ body, author }) => {
-                return (
-                  <p>
-                    {body}{' '}
-                    <p>
-                      {' '}
-                      {author} votes = {vote}
-                    </p>
-                    <button onClick={() => incrementVote()}>vote</button>
-                  </p>
-                );
-              })}
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </>
+      <p className='single-article__content'>{singleArticle.body}</p>
+
+      <button onClick={() => incrementVote()}>vote</button>
+
+      <Expandable label={' comment '}>
+        <Create setComments={setComments} />
+      </Expandable>
+
+      <ul className='comment__wrapper'>
+        <h3 className='comment__title'>Comments</h3>
+        {comments.map(({ body, author }) => {
+          return (
+            <li className='comment'>
+              <p className='comment__content'>{body}</p>
+
+              <ul className='article__meta'>
+                <li className='article__votes'>
+                  <span>Votes:</span> {vote}
+                </li>
+                <li className='article__author'>
+                  <span>Author:</span> {author}
+                </li>
+                <button
+                  className='comment__vote-btn'
+                  onClick={() => incrementVote()}
+                >
+                  Vote
+                </button>
+              </ul>
+            </li>
+          );
+        })}
+      </ul>
+    </article>
   );
 };
 

@@ -39,3 +39,8 @@ export const postComment = async (id, newComment) => {
       return response.data.comment;
     });
 };
+
+export const patchVote = async (id, vote) => {
+  const { data } = await newsApi.get(`/articles/${id}, vote`);
+  return data.vote;
+};

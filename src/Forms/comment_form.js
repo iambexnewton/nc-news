@@ -31,6 +31,7 @@ const Create = ({ setComments }) => {
       <form onSubmit={handleSubmit}>
         <label>New comment</label>
         <input
+          className='comment__input'
           type='text'
           required
           value={title}
@@ -39,18 +40,21 @@ const Create = ({ setComments }) => {
 
         <label>Comment body</label>
         <textarea
+          className='comment__input comment__textarea'
           required
           value={body}
           onChange={(e) => setBody(e.target.value)}
         ></textarea>
-        <label> Comment author: </label>
-        <select>
-          <option value='default'> jessjelly </option>
+        <label>Comment author: </label>
+        <select className='comment__input'>
+          <option value='default'>Jessjelly</option>
         </select>
-        {!isPending && <button>SUBMIT COMMENT</button>}
-        {isPending && <button disabled>SUBMITING YOUR COMMENT...</button>}
-        <p>{title}</p>
-        <p>{body}</p>
+        {!isPending && <button className='comment__btn'>Submit comment</button>}
+        {isPending && (
+          <button className='comment__btn' disabled>
+            Submitting your comment...
+          </button>
+        )}
       </form>
     </div>
   );

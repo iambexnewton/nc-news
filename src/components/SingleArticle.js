@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useVote } from '../hooks/useVote';
 import { getSingleArticle, getArticleComments } from '../utils/api';
+import Create from '../Forms/comment_form';
 
 const SingleArticle = () => {
   const [singleArticle, setSingleArticle] = useState({});
@@ -22,23 +23,27 @@ const SingleArticle = () => {
   }, [id]);
 
   return (
-    <div>
-      {isPending && <div>Loding...</div>}
-      <ul>
-        <li className='singleArticles'>
-          <h2>{singleArticle.title}</h2>
-          <p>{singleArticle.body}</p>
-          <p> user :{singleArticle.author}</p>
-          <p>
-            votes: {singleArticle.votes}
-            comment_count:
-            {singleArticle.comment_count}
+    <>
+      <div>
+        {isPending && <div>Loding...</div>}
+        <ul>
+          <li className='singleArticles'>
+            <h2>{singleArticle.title}</h2>
+            <p>{singleArticle.body}</p>
+            <p> user :{singleArticle.author}</p>
             <p>
-              <button onClick={() => incrementVote()}>ADD VOTE</button>
+              votes: {singleArticle.votes}
+              comment_count:
+              {singleArticle.comment_count}
             </p>
-          </p>
 
-          <Expandable>
+            <button onClick={() => incrementVote()}>ADD VOTE</button>
+
+            <Expandable label={'Make a comment '}>
+              <Create setComments={setComments} />
+            </Expandable>
+
+            {/* <Expandable label={'Comments'}> */}
             <ul>
               {comments.map(({ body, author }) => {
                 return (
@@ -48,22 +53,20 @@ const SingleArticle = () => {
                       {' '}
                       {author} votes = {vote}
                     </p>
-                    <Link to={`/article/${id}/comments`}>
-                      <button>ADD COMMENT</button>
-                    </Link>
                     <button onClick={() => incrementVote()}>ADD VOTE</button>
                   </p>
                 );
               })}
             </ul>
-          </Expandable>
-        </li>
-      </ul>
-    </div>
+            {/* </Expandable> */}
+          </li>
+        </ul>
+      </div>
+    </>
   );
 };
 
-function Expandable({ children }) {
+function Expandable({ children, label }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleIsOpen = () => {
@@ -75,7 +78,7 @@ function Expandable({ children }) {
   return (
     <>
       <button onClick={toggleIsOpen}>
-        {isOpen ? 'Close comments' : 'Open comments'}{' '}
+        {isOpen ? `Close ${label}` : `Open ${label}`}{' '}
       </button>
       {isOpen && children}
     </>

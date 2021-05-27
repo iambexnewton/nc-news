@@ -4,10 +4,12 @@ import { getTopics } from '../utils/api';
 
 const Nav = () => {
   const [topics, setTopics] = useState([]);
+  const [isPending, setisPending] = useState(true);
 
   useEffect(() => {
     getTopics().then((topicsFromApi) => {
       setTopics(topicsFromApi);
+      setisPending(false);
     });
   }, []);
 
@@ -20,6 +22,7 @@ const Nav = () => {
           </Link>
         );
       })}
+      {isPending && <div>Loding...</div>}
     </nav>
   );
 };

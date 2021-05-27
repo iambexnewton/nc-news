@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { postComment } from '../utils/api';
 
-const Create = () => {
+const Create = ({ setComments }) => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [isPending, setIsPending] = useState(false);
@@ -10,15 +11,20 @@ const Create = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('******');
-    const newComment = { title, body };
-    setIsPending(true);
 
-    axios
-      .post(`/api/article/${id}/comments`, newComment)
-      .then((response) => ({ articleId: response.data.id }));
-    console.log('new comment added');
-    setIsPending(false);
+    const newComment = { body: newComment, username: 'jessjelly' };
+    setIsPending(true);
+    postComment(id, newComment)
+      .then((commentFromApi) => {
+        console.log(commentFromApi);
+
+        setIsPending(false);
+      })
+      .then((response) => {
+        setComments((currComment) => {
+          return [response, ...currComment];
+        });
+      });
   };
 
   return (

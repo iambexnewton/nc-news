@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Articles from './components/Articles';
 import SingleArticle from './components/SingleArticle';
 import Create from './Forms/comment_form';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
           </Route>
           <Route exact path='/article/:id/comments'>
             <Create />
+          </Route>
+          <Route path='*'>
+            <NotFound />
           </Route>
         </Switch>
       </div>

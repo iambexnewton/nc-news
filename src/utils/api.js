@@ -28,8 +28,14 @@ export const getSingleArticle = async (id) => {
 
 export const getArticleComments = async (id) => {
   const { data } = await newsApi.get(`/articles/${id}/comments`);
-
-  console.log(data);
-
   return data.comments;
+};
+
+export const postComment = async (id, newComment) => {
+  return newsApi
+    .post(`/articles/${id}/comments`, newComment)
+    .then((response) => {
+      console.log(response.data.comment);
+      return response.data.comment;
+    });
 };

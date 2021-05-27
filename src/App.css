@@ -19,13 +19,18 @@ li {
   align-items: center;
   display: flex;
   justify-content: space-between;
-  max-width: 80%;
-  margin: 30px;
 }
 
 .nav a {
   text-decoration: none;
   font-size: 30px;
+}
+
+.svg {
+  color: #9b6e1e;
+  height: 25px;
+  margin: 15px;
+  align-items: baseline;
 }
 
 .nav a:hover {
@@ -35,7 +40,7 @@ li {
 
 @media screen and (min-width: 550px) {
   .nav {
-    margin: 30px;
+    margin: 10px;
     max-width: 80%;
   }
 }
@@ -49,11 +54,12 @@ li {
   color: hsl(220, 13%, 18%);
   text-align: center;
   padding: 3%;
+  position: sticky;
 }
 
 .article__wrapper {
   margin: 0 auto;
-  padding: 016px;
+  padding: 0 16px;
 }
 
 .article {
@@ -91,4 +97,8 @@ li {
   border: 1px solid pink;
   box-sizing: border-box;
   display: block;
+}
+
+.button {
+  border-radius: 30px;
 }

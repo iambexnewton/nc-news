@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import * as newsApi from '../utils/api';
 import { getAllArticlesByTopic } from '../utils/api';
 
 const Articles = () => {
   const [articles, setArticles] = useState([]);
+  const [sort_by, setSortBy] = useState('Title');
+  const [isPending, setisPending] = useState(true);
   const { topicsUrl } = useParams();
 
   useEffect(() => {
@@ -12,9 +15,21 @@ const Articles = () => {
     });
   }, [topicsUrl]);
 
+  useEffect(() => {
+    newsApi.getAllArticlesByTopic({ sort_by }).then((articles) => {
+      setArticles(articles);
+      setisPending(false);
+    });
+  }, [sort_by]);
+
   return (
     <div>
       <h2>All Articles</h2>
+      <button On Click={() => setSortBy('Title')}>
+        Title
+      </button>
+
+      <button>Date</button>
       <ul className='article__wrapper'>
         {articles &&
           articles.map(
@@ -31,7 +46,8 @@ const Articles = () => {
                 </Link>
               );
             }
-          )}
+          )}{' '}
+        {isPending && <div>Loding...</div>}
       </ul>
     </div>
   );

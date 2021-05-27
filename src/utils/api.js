@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const newsApi = axios.create({
+export const newsApi = axios.create({
   baseURL: 'https://bex-northcoders-news.herokuapp.com/api'
 });
 

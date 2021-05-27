@@ -12,19 +12,18 @@ const Create = ({ setComments }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newComment = { body: newComment, username: 'jessjelly' };
+    const newComment = { body, username: 'jessjelly' };
     setIsPending(true);
-    postComment(id, newComment)
-      .then((commentFromApi) => {
-        console.log(commentFromApi);
-
-        setIsPending(false);
-      })
-      .then((response) => {
-        setComments((currComment) => {
-          return [response, ...currComment];
-        });
+    postComment(id, newComment).then((commentFromApi) => {
+      console.log(commentFromApi);
+      setComments((currComment) => {
+        return [commentFromApi, ...currComment];
       });
+      setIsPending(false);
+
+      setBody('');
+      setTitle('');
+    });
   };
 
   return (

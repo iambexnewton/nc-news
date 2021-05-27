@@ -37,13 +37,12 @@ const SingleArticle = () => {
               {singleArticle.comment_count}
             </p>
 
-            <button onClick={() => incrementVote()}>ADD VOTE</button>
+            <button onClick={() => incrementVote()}>vote</button>
 
-            <Expandable label={'Make a comment '}>
+            <Expandable label={' comment '}>
               <Create setComments={setComments} />
             </Expandable>
 
-            {/* <Expandable label={'Comments'}> */}
             <ul>
               {comments.map(({ body, author }) => {
                 return (
@@ -53,12 +52,11 @@ const SingleArticle = () => {
                       {' '}
                       {author} votes = {vote}
                     </p>
-                    <button onClick={() => incrementVote()}>ADD VOTE</button>
+                    <button onClick={() => incrementVote()}>vote</button>
                   </p>
                 );
               })}
             </ul>
-            {/* </Expandable> */}
           </li>
         </ul>
       </div>
@@ -78,7 +76,7 @@ function Expandable({ children, label }) {
   return (
     <>
       <button onClick={toggleIsOpen}>
-        {isOpen ? `Close ${label}` : `Open ${label}`}{' '}
+        {isOpen ? `Close ` : ` Leave a ${label}`}{' '}
       </button>
       {isOpen && children}
     </>

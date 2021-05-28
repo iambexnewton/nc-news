@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useVote } from '../hooks/useVote';
-import { getSingleArticle, getArticleComments, patchVote } from '../utils/api';
+import { Vote } from '../components/Vote';
+import { getSingleArticle, getArticleComments } from '../utils/api';
 import Create from '../Forms/comment_form';
 
 const SingleArticle = () => {
@@ -10,7 +10,7 @@ const SingleArticle = () => {
   const [isPending, setisPending] = useState(true);
   const { id } = useParams();
 
-  const { vote, setVote, incrementVote } = useVote(0);
+  const { vote, setVoteChange, incrementVote } = useState(0);
 
   useEffect(() => {
     getSingleArticle(id).then((articleFromApi) => {
@@ -62,10 +62,7 @@ const SingleArticle = () => {
                 <li className='article__author'>
                   <span>Author:</span> {author}
                 </li>
-                <button
-                  className='comment__vote-btn'
-                  onClick={() => incrementVote()}
-                >
+                <button className='comment__vote-btn' onClick={incrementVote}>
                   Vote
                 </button>
               </ul>

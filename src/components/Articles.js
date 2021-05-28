@@ -5,22 +5,17 @@ import { getAllArticlesByTopic } from '../utils/api';
 
 const Articles = () => {
   const [articles, setArticles] = useState([]);
-  const [sort_by, setSortBy] = useState('Title');
+  const [sort_by, setSortBy] = useState();
   const [isPending, setisPending] = useState(true);
   const { topicsUrl } = useParams();
 
   useEffect(() => {
-    getAllArticlesByTopic(topicsUrl).then((articlesFromApi) => {
+    console.log(sort_by);
+    getAllArticlesByTopic(topicsUrl, sort_by).then((articlesFromApi) => {
       setArticles(articlesFromApi);
-    });
-  }, [topicsUrl]);
-
-  useEffect(() => {
-    newsApi.getAllArticlesByTopic(sort_by).then((articles) => {
-      setArticles(articles);
       setisPending(false);
     });
-  }, [sort_by]);
+  }, [topicsUrl, sort_by]);
 
   return (
     <div className='content'>
@@ -32,12 +27,18 @@ const Articles = () => {
           <span className='content__filter content__filter-sort'>Sort by:</span>
           <button
             className='content__filter content__filter-button'
-            On
-            Click={() => setSortBy('Title')}
+            onClick={() => {
+              setSortBy('votes');
+            }}
           >
-            Title
+            Votes
           </button>
-          <button className='content__filter content__filter-button'>
+          <button
+            className='content__filter content__filter-button'
+            onClick={() => {
+              setSortBy('created_at');
+            }}
+          >
             Date
           </button>
         </div>
@@ -57,7 +58,7 @@ const Articles = () => {
                     )}...`}</p>
                     <ul className='article__meta'>
                       <li className='article__votes'>
-                        <span>Votes:</span> {votes}
+                        <span>Votes:{votes}</span>
                       </li>
                       <li className='article__comments'>
                         <span>Comments:</span> {comment_count}

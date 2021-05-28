@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Vote } from '../components/Vote';
-import { getSingleArticle, getArticleComments } from '../utils/api';
+import {
+  getSingleArticle,
+  getArticleComments,
+  deleteComment
+} from '../utils/api';
 import Create from '../Forms/comment_form';
 
 const SingleArticle = () => {
@@ -10,7 +14,7 @@ const SingleArticle = () => {
   const [isPending, setisPending] = useState(true);
   const { id } = useParams();
 
-  const { vote, setVoteChange, incrementVote } = useState(0);
+  const { vote, incrementVote } = useState(0);
 
   useEffect(() => {
     getSingleArticle(id).then((articleFromApi) => {
@@ -30,7 +34,9 @@ const SingleArticle = () => {
 
       <ul className='article__meta'>
         <li className='article__votes'>
-          <span>Votes:</span> {singleArticle.votes}
+          <span>
+            <Vote votes={singleArticle.votes} />
+          </span>
         </li>
         <li className='article__comments'>
           <span>Comments:</span> {singleArticle.comment_count}
@@ -42,15 +48,13 @@ const SingleArticle = () => {
 
       <p className='single-article__content'>{singleArticle.body}</p>
 
-      <button onClick={() => incrementVote()}>vote</button>
-
       <Expandable label={' comment '}>
         <Create setComments={setComments} />
       </Expandable>
 
       <ul className='comment__wrapper'>
         <h3 className='comment__title'>Comments</h3>
-        {comments.map(({ body, author }) => {
+        {comments.map(({ body, author, comment_id }) => {
           return (
             <li className='comment'>
               <p className='comment__content'>{body}</p>
@@ -64,6 +68,14 @@ const SingleArticle = () => {
                 </li>
                 <button className='comment__vote-btn' onClick={incrementVote}>
                   Vote
+                </button>
+                <button
+                  className='comment_delete-btn'
+                  onClick={() => {
+                    deleteComment(comment_id);
+                  }}
+                >
+                  Delete
                 </button>
               </ul>
             </li>

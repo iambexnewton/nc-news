@@ -9,12 +9,11 @@ export const getTopics = async () => {
   return data.topics;
 };
 
-export const getAllArticlesByTopic = async (query, sort_by, order) => {
+export const getAllArticlesByTopic = async (query, sort_by) => {
   const { data } = await newsApi.get('/articles', {
     params: {
       topic: query,
-      sort_by: 'created_at',
-      order: 'desc'
+      sort_by: sort_by
     }
   });
 
@@ -41,6 +40,15 @@ export const postComment = async (id, newComment) => {
 };
 
 export const patchVote = async (id, vote) => {
-  const { data } = await newsApi.get(`/articles/${id}, vote`);
-  return data.vote;
+  return newsApi
+    .patch(`/articles/${id}`, { inc_votes: vote })
+    .then((response) => {
+      return response.data.vote;
+    });
+};
+
+export const deleteComment = async (comment_id) => {
+  return newsApi.delete(`/comments/${comment_id}`).then((response) => {
+    return !response.data.comment_id;
+  });
 };

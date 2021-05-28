@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { postComment } from '../utils/api';
@@ -29,7 +28,7 @@ const Create = ({ setComments }) => {
   return (
     <div className='createComment'>
       <form onSubmit={handleSubmit}>
-        <label>New comment</label>
+        <label>Title</label>
         <input
           className='comment__input'
           type='text'
@@ -38,14 +37,14 @@ const Create = ({ setComments }) => {
           onChange={(e) => setTitle(e.target.value)}
         />
 
-        <label>Comment body</label>
+        <label>Comment</label>
         <textarea
           className='comment__input comment__textarea'
           required
           value={body}
           onChange={(e) => setBody(e.target.value)}
         ></textarea>
-        <label>Comment author: </label>
+        <label>Author: </label>
         <select className='comment__input'>
           <option value='default'>Jessjelly</option>
         </select>
